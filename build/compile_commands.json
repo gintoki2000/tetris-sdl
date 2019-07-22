@@ -1,0 +1,7 @@
+[
+  {
+    "directory": "/home/ngothoitrung/Projects/tetris/build",
+    "command": "cc -Itetris@exe -I. -I.. -I/usr/include/SDL2 -I/home/ngothoitrung/Projects/tetris/build -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -g -D_REENTRANT -MD -MQ 'tetris@exe/src_tetris.c.o' -MF 'tetris@exe/src_tetris.c.o.d' -o 'tetris@exe/src_tetris.c.o' -c ../src/tetris.c",
+    "file": "../src/tetris.c"
+  }
+]

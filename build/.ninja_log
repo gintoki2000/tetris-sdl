@@ -1,0 +1,4 @@
+# ninja log v5
+0	486	1563671375	tetris@exe/src_tetris.c.o	b30f63312b03587b
+488	603	1563671375	tetris	b9cdbf2ed55b1234
+1	517	0	meson-install	e81cc1eb8ad4718c
