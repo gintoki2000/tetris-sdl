@@ -12,7 +12,6 @@
 #define TOTAL_SHAPE                 5
 #define TOTAL_COLOR                 7
 
-#define PI                          3.141592
 
 const char T_SHAPE[] = {
   3, 2,
@@ -83,12 +82,12 @@ SDL_Window*       g_window = NULL;
 SDL_Renderer*     g_renderer = NULL;
 SDL_Event         g_main_event;
 
-//game status
-unsigned int      g_delay = 300;
+unsigned int      g_delay = 16;
 bool              g_is_game_running = true;
 GameState         g_game_state;
+unsigned int      g_game_speed = 200;
+unsigned int      g_last_move_time;
 
-//game board
 int               g_score;
 int               g_game_board[GAME_BOARD_HEIGHT][GAME_BOARD_WIDTH];
 Shape*            g_current_shape = NULL;
@@ -231,7 +230,7 @@ void inGameReset()
           g_game_board[y][x] = 0;
         }
     }
-  ;
+  g_last_move_time = SDL_GetTicks ();
 }
 
 void inGameInput()
@@ -241,6 +240,29 @@ void inGameInput()
       if(g_main_event.type == SDL_QUIT)
         g_is_game_running = false;
     }
+}
+
+void clearRow(int row)
+{
+  for(int i = row; i > 0; --i)
+    {
+      for(int j = 0; j < GAME_BOARD_WIDTH; ++j)
+        {
+          g_game_board[i][j] = g_game_board[i - 1][j];
+        }
+    }
+}
+
+SDL_bool isFilledRow(int row)
+{
+  for(int j = 0; j < GAME_BOARD_WIDTH; ++j)
+    {
+      if(g_game_board[row][j] == 0)
+        {
+          return SDL_FALSE;
+        }
+    }
+  return SDL_TRUE;
 }
 
 void inGameTick()
@@ -270,7 +292,13 @@ void inGameTick()
     {
 
     }
-  tryMoveDown();
+
+  if(SDL_GetTicks () - g_last_move_time >= g_game_speed)
+    {
+      tryMoveDown();
+      g_last_move_time = SDL_GetTicks ();
+    }
+
 }
 
 void inGameDoGameLogic()
